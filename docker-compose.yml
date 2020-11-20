@@ -1,0 +1,35 @@
+version: '3'
+services:
+  backend:
+    container_name: mutant-challenge-backend
+    build: docker/dev
+    ports:
+      - '3333:3333'
+    env_file:
+      - .env
+    volumes:
+      - '.:/server'
+    links:
+      - database
+      - logs
+  database:
+    container_name: mutant-challenge-database
+    image: mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    environment:
+      MYSQL_DATABASE: 'mutant-challenge'
+      MYSQL_USER: mutant
+      MYSQL_PASSWORD: mutant
+    volumes:
+      - './data/mysql:/var/lib/mysql'
+    ports:
+      - '3306:3306'
+  logs:
+    container_name: mutant-challenge-logs
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    restart: always
+    environment:
+      http.host: 0.0.0.0
+      transport.host: 127.0.0.1
+    ports:
+      - '9200:9200'
