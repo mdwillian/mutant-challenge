@@ -22,6 +22,9 @@ $ git clone https://github.com/mdwillian/mutant-challenge.git
 # Acesse a pasta do projeto no seu terminal
 $ cd mutant-challenge
 
+# Crie o arquivo com as variáveis de ambiente
+$ cp .env.example .env
+
 # Instale as dependências
 $ yarn install
 
